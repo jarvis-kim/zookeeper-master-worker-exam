@@ -1,0 +1,75 @@
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.util.stream.Stream
+
+buildscript {
+    ext {
+        springBootVersion = '2.1.0.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.jarvis.exam.zookeeper'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 10
+
+repositories {
+    mavenCentral()
+}
+
+//task mkdirOnBuild(dependsOn: build) {
+//    makeZkDir()
+//}
+
+//task clearZkDir() {
+//    def zk0 = Paths.get("${project.projectDir}", "zk/zoo")
+//    def zk1 = Paths.get("${project.projectDir}", "zk/zoo1")
+//    def zk2 = Paths.get("${project.projectDir}", "zk/zoo2")
+//    def zk3 = Paths.get("${project.projectDir}", "zk/zoo3")
+//
+//    Stream.of(zk0, zk1, zk2, zk3)
+//        .map{ z -> Files.walk(z) }
+//        .flatMap{ s -> s }
+//        .sorted { a1, a2 -> (a2 <=> a1) }
+//        .peek { println("delete file : " + it.toAbsolutePath()) }
+//        .map { it.toFile() }
+//        .forEach { it.delete() }
+//}
+
+//
+//task makeZkDir() {
+//    ['zk/zoo1/data', 'zk/zoo1/datalog',
+//     'zk/zoo2/data', 'zk/zoo2/datalog',
+//     'zk/zoo3/data', 'zk/zoo3/datalog',].each { dir ->
+//        def file = Paths.get("${project.projectDir}", dir).toFile()
+//
+//        if (!file.exists()) {
+//            println("make dir: " + file.path)
+//            file.mkdirs()
+//        }
+//    }
+//}
+
+//task runSingleZookeeper(type: Exec) {
+////    executable "sh"
+////    args "-c", "echo 'hello from your shell'"
+//    executable "docker-compose"
+//    args "-c","-f ${root}/single-docker-compose.yml up -d"
+//}
+
+dependencies {
+    implementation('org.springframework.boot:spring-boot-starter')
+    compile group: 'org.apache.zookeeper', name: 'zookeeper', version: '3.4.13'
+    compileOnly('org.projectlombok:lombok')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+}
